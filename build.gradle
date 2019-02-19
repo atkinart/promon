@@ -1,0 +1,32 @@
+task buildSlave(type: Zip) {
+        from './slave'
+        include '*'
+        include '*/*'
+        include '*/**'
+        archiveName 'slave.zip'
+        destinationDir(file('./build'))
+
+        println 'Build slave.zip success.'
+}
+
+task build(type: Zip) {
+
+        from './master'
+        include '*'
+        include '*/*'
+        include '*/**'
+        archiveName 'master.zip'
+        destinationDir(file('./build'))
+        println 'Build master.zip success.'
+
+}
+
+build.finalizedBy buildSlave
+
+wrapper {
+    gradleVersion = '5.2.1'
+}
+
+task clean{
+    delete "./build"
+}
